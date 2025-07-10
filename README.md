@@ -250,8 +250,6 @@ ansible all -m ping
 
 ### Step 6: Create Main Playbook
 ```yaml
-# Create playbooks/site.yml
-cat > playbooks/site.yml << 'EOF'
 ---
 - name: System Information and Apache Setup
   hosts: webservers
@@ -276,15 +274,6 @@ cat > playbooks/site.yml << 'EOF'
           - Memory: {{ ansible_memtotal_mb }}MB
           - CPU Cores: {{ ansible_processor_cores }}
       
-    - name: Create system info webpage
-      template:
-        src: system_info.html.j2
-        dest: "{{ web_root }}/system_info.html"
-        owner: apache
-        group: apache
-        mode: '0644'
-      notify: restart apache
-      
     - name: Install Apache HTTP Server
       yum:
         name: "{{ apache_package }}"
@@ -296,6 +285,15 @@ cat > playbooks/site.yml << 'EOF'
         state: started
         enabled: yes
         
+    - name: Create system info webpage
+      template:
+        src: system_info.html.j2
+        dest: "{{ web_root }}/system_info.html"
+        owner: apache
+        group: apache
+        mode: '0644'
+      notify: restart apache
+      
     - name: Create custom index page
       template:
         src: index.html.j2
@@ -326,7 +324,6 @@ cat > playbooks/site.yml << 'EOF'
       systemd:
         name: "{{ apache_service }}"
         state: restarted
-EOF
 ```
 
 ### Step 7: Create Templates
