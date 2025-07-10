@@ -332,49 +332,29 @@ ansible all -m ping
 mkdir -p templates
 
 # Create index.html template
-cat > templates/index.html.j2 << 'EOF'
+cat > /home/ec2-user/ansible-lab/playbooks/templates/index.html.j2 << 'EOF'
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ ansible_hostname }} - Ansible Demo</title>
+    <title>Welcome to {{ ansible_hostname }}</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .header { background-color: #f0f0f0; padding: 20px; border-radius: 5px; }
-        .info { margin: 20px 0; padding: 15px; background-color: #e8f4f8; border-radius: 5px; }
-        .timestamp { color: #666; font-size: 0.9em; }
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f0f0f0; }
+        .container { background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; }
+        .links { margin-top: 20px; }
+        a { color: #3498db; text-decoration: none; margin-right: 20px; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🚀 Ansible Provisioning Demo</h1>
-        <p>This server was configured using Infrastructure as Code!</p>
-    </div>
-    
-    <div class="info">
-        <h2>Server Information</h2>
-        <ul>
-            <li><strong>Hostname:</strong> {{ ansible_hostname }}</li>
-            <li><strong>Operating System:</strong> {{ ansible_distribution }} {{ ansible_distribution_version }}</li>
-            <li><strong>Architecture:</strong> {{ ansible_architecture }}</li>
-            <li><strong>IP Address:</strong> {{ ansible_default_ipv4.address }}</li>
-            <li><strong>Provisioned:</strong> {{ ansible_date_time.iso8601 }}</li>
-        </ul>
-    </div>
-    
-    <div class="info">
-        <h2>Infrastructure as Code Benefits</h2>
-        <ul>
-            <li>✅ Consistent configuration across environments</li>
-            <li>✅ Version controlled infrastructure</li>
-            <li>✅ Reproducible deployments</li>
-            <li>✅ Automated provisioning</li>
-            <li>✅ Reduced human error</li>
-        </ul>
-    </div>
-    
-    <div class="timestamp">
-        <p>Last updated: {{ ansible_date_time.iso8601 }}</p>
-        <p><a href="/system_info.html">View Detailed System Information</a></p>
+    <div class="container">
+        <h1>Welcome to {{ ansible_hostname }}</h1>
+        <p>This server is managed by Ansible!</p>
+        <p><strong>Server:</strong> {{ ansible_hostname }}</p>
+        <p><strong>IP Address:</strong> {{ ansible_default_ipv4.address }}</p>
+        <div class="links">
+            <a href="/system_info.html">View System Information</a>
+        </div>
     </div>
 </body>
 </html>
